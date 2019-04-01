@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/codegangsta/negroni"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 )
@@ -69,10 +68,10 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // MiddleWare middleware for resource handler
-func MiddleWare(handler http.Handler) http.Handler {
-	return negroni.New(
-		negroni.HandlerFunc(validateTokenMiddleware),
-		negroni.Wrap(handler))
+func MiddleWare(next http.HandlerFunc) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		validateTokenMiddleware(w, r, next.ServeHTTP)
+	})
 }
 
 func validateTokenMiddleware(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {

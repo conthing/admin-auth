@@ -11,7 +11,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/conthing/conthing-admin-auth/auth"
+	"github.com/conthing/admin-auth/auth"
 )
 
 func startHTTPServer(errChan chan error, port int) {
