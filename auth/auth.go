@@ -36,7 +36,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if user.Username != "someone" || user.Password != "p@ssword" {
+	if user.Username != "admin" || user.Password != "admin" {
 		w.WriteHeader(http.StatusForbidden)
 		fmt.Fprint(w, "Invalid credentials")
 		log.Println("Error logging in")
