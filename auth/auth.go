@@ -87,10 +87,11 @@ func validateTokenMiddleware(w http.ResponseWriter, r *http.Request, next http.H
 		} else {
 			w.WriteHeader(http.StatusUnauthorized)
 			fmt.Fprint(w, "Token is not valid")
+			log.Print("Token is not valid")
 		}
 	} else {
 		w.WriteHeader(http.StatusUnauthorized)
-		fmt.Fprint(w, "Unauthorized access to this resource")
+		log.Print("Unauthorized access to this resource")
 	}
 
 }
