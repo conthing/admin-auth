@@ -76,7 +76,7 @@ func MiddleWare(next http.HandlerFunc) http.HandlerFunc {
 
 func validateTokenMiddleware(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 
-	fmt.Println(r.Host)
+	fmt.Println(r.Host, r.RemoteAddr)
 
 	token, err := request.ParseFromRequest(r, request.AuthorizationHeaderExtractor,
 		func(token *jwt.Token) (interface{}, error) {
