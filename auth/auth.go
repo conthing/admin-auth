@@ -76,8 +76,10 @@ func MiddleWare(next http.HandlerFunc) http.HandlerFunc {
 
 func validateTokenMiddleware(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 
-	fmt.Println(r.Host, r.RemoteAddr)
-
+	if r.UserAgent() != "nginx" {
+		next(w, r)
+	}
+	// nginx 转发需要验证token
 	token, err := request.ParseFromRequest(r, request.AuthorizationHeaderExtractor,
 		func(token *jwt.Token) (interface{}, error) {
 			return []byte(secretKey), nil
