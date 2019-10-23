@@ -78,6 +78,7 @@ func validateTokenMiddleware(w http.ResponseWriter, r *http.Request, next http.H
 
 	if r.UserAgent() != "nginx" {
 		next(w, r)
+		return
 	}
 	// nginx 转发需要验证token
 	token, err := request.ParseFromRequest(r, request.AuthorizationHeaderExtractor,
@@ -88,6 +89,7 @@ func validateTokenMiddleware(w http.ResponseWriter, r *http.Request, next http.H
 	if err == nil {
 		if token.Valid {
 			next(w, r)
+			return
 		} else {
 			w.WriteHeader(http.StatusUnauthorized)
 			fmt.Fprint(w, "Token is not valid")
